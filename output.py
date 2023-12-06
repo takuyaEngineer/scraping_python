@@ -14,7 +14,7 @@ def output_spreadsheet(store_info):
         return
     
     secret_key = os.environ.get('SECRET_KEY')
-    book_name = 'スクレイピング書き出し用'
+    book_name = '食べログスクレイピング'
     sheet_name = 'シート1'
     try:
         sheet = get_gspread_book(secret_key, book_name).worksheet(sheet_name)
