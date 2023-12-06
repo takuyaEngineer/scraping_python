@@ -1,0 +1,43 @@
+from googleapiclient.discovery import build
+import sys,os
+from dotenv import load_dotenv
+
+# envファイルの読み込み
+load_dotenv()
+
+# Google Custom Search APIを使うための情報
+API_KEY = os.environ.get('API_KEY')
+CSE_ID = os.environ.get('CSE_ID')
+
+def get_search_results(query, start_index):				
+    # Google Custom Search API				
+    service = build("customsearch",				
+                    "v1",				
+                    cache_discovery=False,				
+                    developerKey=API_KEY)				
+    # CSEの検索結果を取得				
+    result = service.cse().list(q=query,				
+                                cx=CSE_ID,
+                                num=10,
+                                start=start_index).execute()				
+    # 検索結果(JSON形式)				
+    return result
+
+
+def get_link_list():
+    # 検索結果を格納する配列
+    results_arr = []
+    # 10件ずつしか検索できないので、100件取得するためのインデックスの配列（1~10、11~20、、、というように10回に分けて取得する）
+    # index_arr = [1,11,21,31,41,51,61,71,81,91]
+    index_arr = [11,21]
+    # 検索する文字列（このpythonファイルを実行するときに入力する引数）
+    search_args = sys.argv[1]
+
+    for index in index_arr:
+        result_search = get_search_results(search_args,index)
+        for item in result_search["items"]:
+            if not "/rank/" in item["link"] and not "/rstLst/" in item["link"]:
+                results_arr.append(item["link"])
+
+    return results_arr
+	
