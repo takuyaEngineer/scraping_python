@@ -5,11 +5,10 @@ from dotenv import load_dotenv
 # envファイルの読み込み
 load_dotenv()
 
-# Google Custom Search APIを使うための情報
+# Google Custom Search API KEY
 API_KEY = os.environ.get('API_KEY')
-CSE_ID = os.environ.get('CSE_ID')
 
-def get_search_results(query, start_index):				
+def get_search_results(query, start_index, cse_id):				
     # Google Custom Search API				
     service = build("customsearch",				
                     "v1",				
@@ -17,14 +16,14 @@ def get_search_results(query, start_index):
                     developerKey=API_KEY)				
     # CSEの検索結果を取得				
     result = service.cse().list(q=query,				
-                                cx=CSE_ID,
+                                cx=cse_id,
                                 num=10,
                                 start=start_index).execute()				
     # 検索結果(JSON形式)				
     return result
 
 
-def get_link_list():
+def get_link_list(cse_id):
     # 検索結果を格納する配列
     results_arr = []
     # 10件ずつしか検索できないので、100件取得するためのインデックスの配列（1~10、11~20、、、というように10回に分けて取得する）
@@ -34,7 +33,7 @@ def get_link_list():
     search_args = sys.argv[1]
 
     for index in index_arr:
-        result_search = get_search_results(search_args,index)
+        result_search = get_search_results(search_args,index,cse_id)
         for item in result_search["items"]:
             if not "/rank/" in item["link"] and not "/rstLst/" in item["link"]:
                 results_arr.append(item["link"])

@@ -14,8 +14,8 @@ def output_spreadsheet(store_info):
         return
     
     secret_key = os.environ.get('SECRET_KEY')
-    book_name = '食べログスクレイピング'
-    sheet_name = 'シート1'
+    book_name = '飲食'
+    sheet_name = sys.argv[1]
     try:
         sheet = get_gspread_book(secret_key, book_name).worksheet(sheet_name)
     except SpreadsheetNotFound:
