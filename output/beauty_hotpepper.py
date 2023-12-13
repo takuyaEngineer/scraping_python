@@ -8,14 +8,14 @@ from dotenv import load_dotenv
 load_dotenv()
 
 
-def output_spreadsheet(store_info):
+def output_spreadsheet(store_info,search_word):
     
     if not store_info:
         return
     
     secret_key = os.environ.get('SECRET_KEY')
     book_name = '美容'
-    sheet_name = sys.argv[1]
+    sheet_name = search_word
     try:
         sheet = get_gspread_book(secret_key, book_name).worksheet(sheet_name)
     except SpreadsheetNotFound:

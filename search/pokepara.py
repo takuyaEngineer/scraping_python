@@ -36,4 +36,3 @@ def get_link_list(cse_id,search_word):
             results_arr.append(item["link"])
 
     return results_arr
-	

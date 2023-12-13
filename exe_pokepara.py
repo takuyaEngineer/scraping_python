@@ -1,18 +1,12 @@
-from search.beauty_hotpepper import get_link_list
-from scrape.beauty_hotpepper import get_store_info
-from output.beauty_hotpepper import output_spreadsheet
+from search.pokepara import get_link_list
+from scrape.pokepara import get_store_info
+from output.pokepara import output_spreadsheet
 from time import sleep
 import os
 
-CSE_ID = os.environ.get('CSE_ID_HOTPEPPER_BEAUTY')
+CSE_ID = os.environ.get('CSE_ID_POKEPARA')
 
 search_words = [
-    "ヘアサロン　大宮",
-    "ヘアサロン　川口",
-    "ヘアサロン　大槻",
-    "ヘアサロン　浦和",
-    "ヘアサロン　東大宮",
-    "ヘアサロン　古河",
     "ヘアサロン　小山",
     "ヘアサロン　大山　東武練馬",
     "ヘアサロン　成増　和光市",
