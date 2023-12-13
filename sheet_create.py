@@ -1,4 +1,3 @@
-import google.auth
 from googleapiclient.discovery import build
 from googleapiclient.errors import HttpError
 
@@ -6,14 +5,14 @@ import os.path
 from google.auth.transport.requests import Request
 from google.oauth2.credentials import Credentials
 from google_auth_oauthlib.flow import InstalledAppFlow
-from googleapiclient.discovery import build
-from googleapiclient.errors import HttpError
+
+import list_data
 
 # If modifying these scopes, delete the file token.json.
 SCOPES = ["https://www.googleapis.com/auth/drive","https://www.googleapis.com/auth/drive.file","https://www.googleapis.com/auth/drive.readonly",
           "https://www.googleapis.com/auth/spreadsheets","https://www.googleapis.com/auth/spreadsheets.readonly"]
 
-def create(title):
+def create():
 
   creds = None
   if os.path.exists("token.json"):
@@ -30,10 +29,45 @@ def create(title):
     # Save the credentials for the next run
     with open("token.json", "w") as token:
       token.write(creds.to_json())
+  
+  sheets = []
+  values = []
+
+  for value in list_data.list_data["values"]:
+    values.append(
+      {
+        "userEnteredValue": {
+          "stringValue": value,
+        }
+      },
+    )
+
+  for sheet in list_data.list_data["sheets"]:
+    sheets.append(
+      {
+        "properties": {
+          "title": sheet,
+        },
+        "data": [
+          {
+              "startRow": 0,
+              "startColumn": 0,
+              "rowData": [
+                {
+                  "values": values
+                }
+              ],
+          }
+        ]
+      }
+    )
 
   try:
     service = build("sheets", "v4", credentials=creds)
-    spreadsheet = {"properties": {"title": title}}
+    spreadsheet = {
+      "properties": {"title": list_data.list_data["spreadsheet_name"]},
+      "sheets": sheets
+    }
     spreadsheet = (
         service.spreadsheets()
         .create(body=spreadsheet, fields="spreadsheetId")
@@ -48,4 +82,4 @@ def create(title):
 
 if __name__ == "__main__":
   # Pass: title
-  create("test")
+  create()
