@@ -1,0 +1,5 @@
+
+
+１スプレッドシートにjsonのemailを共有する
+２exe.pyファイルのbook_nameとsearch_wordsを変更する
+３実行する
