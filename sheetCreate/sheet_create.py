@@ -6,9 +6,9 @@ from google.auth.transport.requests import Request
 from google.oauth2.credentials import Credentials
 from google_auth_oauthlib.flow import InstalledAppFlow
 
-import list_data
+from ..listData.list_data_area1 import list_data
 
-# If modifying these scopes, delete the file token.json.
+# このアプリがどこまでの権限を持つか
 SCOPES = ["https://www.googleapis.com/auth/drive","https://www.googleapis.com/auth/drive.file","https://www.googleapis.com/auth/drive.readonly",
           "https://www.googleapis.com/auth/spreadsheets","https://www.googleapis.com/auth/spreadsheets.readonly"]
 
@@ -17,7 +17,6 @@ def create():
   creds = None
   if os.path.exists("token.json"):
     creds = Credentials.from_authorized_user_file("token.json", SCOPES)
-  # If there are no (valid) credentials available, let the user log in.
   if not creds or not creds.valid:
     if creds and creds.expired and creds.refresh_token:
       creds.refresh(Request())
@@ -26,14 +25,13 @@ def create():
           "credentials.json", SCOPES
       )
       creds = flow.run_local_server(port=0)
-    # Save the credentials for the next run
     with open("token.json", "w") as token:
       token.write(creds.to_json())
   
   sheets = []
   values = []
 
-  for value in list_data.list_data["values"]:
+  for value in list_data["values"]:
     values.append(
       {
         "userEnteredValue": {
@@ -42,7 +40,7 @@ def create():
       },
     )
 
-  for sheet in list_data.list_data["sheets"]:
+  for sheet in list_data["sheets"]:
     sheets.append(
       {
         "properties": {
@@ -65,7 +63,7 @@ def create():
   try:
     service = build("sheets", "v4", credentials=creds)
     spreadsheet = {
-      "properties": {"title": list_data.list_data["spreadsheet_name"]},
+      "properties": {"title": list_data["spreadsheet_name"]},
       "sheets": sheets
     }
     spreadsheet = (
@@ -81,5 +79,4 @@ def create():
 
 
 if __name__ == "__main__":
-  # Pass: title
   create()
