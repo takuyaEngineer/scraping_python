@@ -1,4 +1,4 @@
-from search.pokepara import get_link_list
+from search.index import get_link_list
 from scrape.pokepara import get_store_info
 from output.pokepara import output_spreadsheet
 from time import sleep

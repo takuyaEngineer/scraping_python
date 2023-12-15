@@ -1,5 +1,5 @@
 from googleapiclient.discovery import build
-import os
+import sys,os
 from dotenv import load_dotenv
 
 # envファイルの読み込み
@@ -24,16 +24,21 @@ def get_search_results(query, start_index, cse_id):
 
 
 def get_link_list(cse_id,search_word):
-    # 検索結果を格納する配列
-    results_arr = []
-    # 10件ずつしか検索できないので、100件取得するためのインデックスの配列（1~10、11~20、、、というように10回に分けて取得する）
-    index_arr = [1,11,21,31,41,51,61,71,81,91]
-    # index_arr = [1]
 
-    for index in index_arr:
-        result_search = get_search_results(search_word,index,cse_id)
-        for item in result_search["items"]:
-            results_arr.append(item["link"])
+    try:
+        # 検索結果を格納する配列
+        results_arr = []
+        # 10件ずつしか検索できないので、100件取得するためのインデックスの配列（1~10、11~20、、、というように10回に分けて取得する）
+        index_arr = [1,11,21,31,41,51,61,71,81,91]
+        # index_arr = [1]
 
-    return results_arr
+        for index in index_arr:
+            result_search = get_search_results(search_word,index,cse_id)
+            print(result_search)
+            for item in result_search["items"]:
+                results_arr.append(item["link"])
+
+        return results_arr
+    except:
+        return False
 	

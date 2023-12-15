@@ -6,13 +6,14 @@ from google.auth.transport.requests import Request
 from google.oauth2.credentials import Credentials
 from google_auth_oauthlib.flow import InstalledAppFlow
 
-from ..listData.list_data_area1 import list_data
+from listData.list_data_area1 import list_Eating_and_drinking as list_data
+# from listData.list_data_area1 import list_beauty as list_data
 
 # このアプリがどこまでの権限を持つか
 SCOPES = ["https://www.googleapis.com/auth/drive","https://www.googleapis.com/auth/drive.file","https://www.googleapis.com/auth/drive.readonly",
           "https://www.googleapis.com/auth/spreadsheets","https://www.googleapis.com/auth/spreadsheets.readonly"]
 
-def create():
+def create(genre):
 
   creds = None
   if os.path.exists("token.json"):
@@ -31,7 +32,7 @@ def create():
   sheets = []
   values = []
 
-  for value in list_data["values"]:
+  for value in genre["values"]:
     values.append(
       {
         "userEnteredValue": {
@@ -40,7 +41,7 @@ def create():
       },
     )
 
-  for sheet in list_data["sheets"]:
+  for sheet in genre["sheets"]:
     sheets.append(
       {
         "properties": {
@@ -63,7 +64,7 @@ def create():
   try:
     service = build("sheets", "v4", credentials=creds)
     spreadsheet = {
-      "properties": {"title": list_data["spreadsheet_name"]},
+      "properties": {"title": genre["spreadsheet_name"]},
       "sheets": sheets
     }
     spreadsheet = (
@@ -79,4 +80,5 @@ def create():
 
 
 if __name__ == "__main__":
-  create()
+  for genre in list_data:
+    create(genre)

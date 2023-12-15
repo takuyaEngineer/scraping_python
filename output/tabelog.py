@@ -8,13 +8,12 @@ from dotenv import load_dotenv
 load_dotenv()
 
 
-def output_spreadsheet(store_info,search_word):
+def output_spreadsheet(store_info,search_word,book_name):
     
     if not store_info:
         return
     
     secret_key = os.environ.get('SECRET_KEY')
-    book_name = '飲食'
     sheet_name = search_word
     try:
         sheet = get_gspread_book(secret_key, book_name).worksheet(sheet_name)
@@ -27,11 +26,11 @@ def output_spreadsheet(store_info,search_word):
     
     row = next_available_row(sheet)
     print(row)
-    sheet.update_acell('A' + str(row), store_info["link"])
-    sheet.update_acell('B' + str(row), store_info["store_name"])
-    sheet.update_acell('C' + str(row), store_info["tel"])
-    sheet.update_acell('G' + str(row), store_info["Genre"])
-    sheet.update_acell('H' + str(row), store_info["address"])
+    sheet.update_acell('A' + str(row), store_info["store_name"])
+    sheet.update_acell('B' + str(row), store_info["tel"])
+    sheet.update_acell('C' + str(row), store_info["Genre"])
+    sheet.update_acell('D' + str(row), store_info["address"])
+    sheet.update_acell('E' + str(row), store_info["link"])
 
 
 def get_gspread_book(secret_key, book_name):
