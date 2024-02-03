@@ -4,13 +4,14 @@ from time import sleep
 
 def get_store_info(url):
 
+    store_info = {}
+
     try:
         # urlにリクエストを送る
         res = requests.get(url)
         #取得したresをパース
         soup = BeautifulSoup(res.content, "html.parser")
 
-        store_info = {}
 
         # ホットペッパービューティーのリンク
         store_info["link"] = url
@@ -39,4 +40,5 @@ def get_store_info(url):
         return store_info
     
     except:
-        return False
+        print("スクレイピングでエクセプションになりました。")
+        return []

@@ -1,0 +1,5 @@
+
+
+token.jsonを削除する
+sheet_create.pyの9行目のimportのリストデータを変更する
+sheet_create.pyを実行する

@@ -38,7 +38,7 @@ def get_store_info(url):
         return store_info
     
     except:
-        return False
+        return []
 
 # get_store_info("https://www.pokepara.jp/saitama/m80/a10700/shop17717/")
 # https://www.pokepara.jp/saitama/m80/a10700/shop17717/

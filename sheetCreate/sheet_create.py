@@ -6,8 +6,7 @@ from google.auth.transport.requests import Request
 from google.oauth2.credentials import Credentials
 from google_auth_oauthlib.flow import InstalledAppFlow
 
-from listData.list_data_area1 import list_Eating_and_drinking as list_data
-# from listData.list_data_area1 import list_beauty as list_data
+from listData.list_data_area2 import list_beauty as list_data
 
 # このアプリがどこまでの権限を持つか
 SCOPES = ["https://www.googleapis.com/auth/drive","https://www.googleapis.com/auth/drive.file","https://www.googleapis.com/auth/drive.readonly",

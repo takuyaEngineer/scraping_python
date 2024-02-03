@@ -55,4 +55,4 @@ def get_store_info(url):
         return store_info
     
     except:
-        return False
+        return []
