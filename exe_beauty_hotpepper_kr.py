@@ -25,6 +25,7 @@ for search_word in search_words:
     try:
         link_list = get_link_list(CSE_ID,search_word)
         print(link_list)
+        
         if link_list:
             for link in link_list:
                 store_info = get_store_info(link)
@@ -32,4 +33,4 @@ for search_word in search_words:
                 sleep(10)
 
     except:
-        print("exceptionです")
+        print("exeでエクセプションです")

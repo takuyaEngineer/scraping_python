@@ -30,8 +30,8 @@ def get_link_list(cse_id,search_word):
 
     try:
         # 10件ずつしか検索できないので、100件取得するためのインデックスの配列（1~10、11~20、、、というように10回に分けて取得する）
-        index_arr = [1,11,21,31,41,51,61,71,81,91]
-        # index_arr = [1]
+        # index_arr = [1,11,21,31,41,51,61,71,81,91]
+        index_arr = [1,11,21]
 
         for index in index_arr:
             result_search = get_search_results(search_word,index,cse_id)
